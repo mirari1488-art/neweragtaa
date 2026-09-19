@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="neon">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Era — Премиум сборки CRMP</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="neon"]{--bg:#07070c;--card:rgba(20,20,32,.55);--border:rgba(255,255,255,.07);--text:#f0f0f5;--text-dim:#8a8a9a;--accent:#ff0055;--accent-2:#00e5ff;--glow:255,0,85;--glow-2:0,229,255;--grad:linear-gradient(135deg,#ff0055,#b400ff,#00e5ff);--blob-1:rgba(255,0,85,.20);--blob-2:rgba(0,229,255,.16);--blob-3:rgba(180,0,255,.14)}
+:root[data-theme="gold"]{--bg:#0a0805;--card:rgba(30,24,14,.55);--border:rgba(212,175,55,.12);--text:#f5efe0;--text-dim:#9a8d70;--accent:#d4af37;--accent-2:#f5d76e;--glow:212,175,55;--glow-2:245,215,110;--grad:linear-gradient(135deg,#d4af37,#f5d76e,#b8860b);--blob-1:rgba(212,175,55,.18);--blob-2:rgba(245,215,110,.12);--blob-3:rgba(184,134,11,.14)}
+:root[data-theme="ocean"]{--bg:#030812;--card:rgba(12,28,48,.55);--border:rgba(80,180,255,.10);--text:#e6f0ff;--text-dim:#7a90b0;--accent:#00b4ff;--accent-2:#00ffc8;--glow:0,180,255;--glow-2:0,255,200;--grad:linear-gradient(135deg,#00b4ff,#00ffc8,#0077ff);--blob-1:rgba(0,180,255,.20);--blob-2:rgba(0,255,200,.14);--blob-3:rgba(0,119,255,.16)}
+:root[data-theme="crimson"]{--bg:#0c0405;--card:rgba(40,12,16,.55);--border:rgba(255,60,60,.10);--text:#fff0f0;--text-dim:#a08080;--accent:#ff2b2b;--accent-2:#ff8c42;--glow:255,43,43;--glow-2:255,140,66;--grad:linear-gradient(135deg,#ff2b2b,#ff8c42,#c9184a);--blob-1:rgba(255,43,43,.20);--blob-2:rgba(255,140,66,.14);--blob-3:rgba(201,24,74,.16)}
+:root[data-theme="aurora"]{--bg:#050810;--card:rgba(18,24,44,.55);--border:rgba(150,120,255,.10);--text:#eef0ff;--text-dim:#8a90b0;--accent:#a855f7;--accent-2:#22ffa7;--glow:168,85,247;--glow-2:34,255,167;--grad:linear-gradient(135deg,#a855f7,#22ffa7,#3b82f6);--blob-1:rgba(168,85,247,.20);--blob-2:rgba(34,255,167,.14);--blob-3:rgba(59,130,246,.16)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh;transition:background .6s ease,color .6s ease;position:relative;line-height:1.5}
+.blobs{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:.9;transition:background .6s ease;animation:drift 22s ease-in-out infinite}
+.blob.b1{width:520px;height:520px;background:var(--blob-1);top:-120px;left:-100px}
+.blob.b2{width:600px;height:600px;background:var(--blob-2);bottom:-150px;right:-120px;animation-delay:-7s}
+.blob.b3{width:450px;height:450px;background:var(--blob-3);top:40%;left:40%;animation-delay:-14s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(80px,-60px) scale(1.15)}66%{transform:translate(-60px,80px) scale(.9)}}
+.grid-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at 50% 30%,#000 40%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 40%,transparent 80%)}
+.noise{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.035;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+header{position:sticky;top:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);background:rgba(7,7,12,.7);border-bottom:1px solid var(--border);transition:background .6s ease,border-color .6s ease}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:var(--grad);background-size:200% 200%;animation:gradMove 6s ease infinite;display:grid;place-items:center;font-size:18px;box-shadow:0 0 24px rgba(var(--glow),.5);transition:box-shadow .6s ease}
+@keyframes gradMove{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.logo-text{background:var(--grad);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradMove 6s ease infinite}
+.nav-links{display:flex;gap:32px}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-size:14px;font-weight:600;position:relative;padding:4px 0;transition:color .3s ease}
+.nav-links a:hover{color:var(--text)}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .3s ease;box-shadow:0 0 8px rgba(var(--glow),.8)}
+.nav-links a:hover::after{width:100%}
+.theme-switch{display:flex;gap:8px;padding:6px;border-radius:50px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(10px);transition:background .6s ease,border-color .6s ease}
+.theme-dot{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.theme-dot:hover{transform:scale(1.18)}
+.theme-dot.active{border-color:var(--text);box-shadow:0 0 14px rgba(var(--glow),.9);transform:scale(1.12)}
+.theme-dot[data-t="neon"]{background:linear-gradient(135deg,#ff0055,#00e5ff)}
+.theme-dot[data-t="gold"]{background:linear-gradient(135deg,#d4af37,#f5d76e)}
+.theme-dot[data-t="ocean"]{background:linear-gradient(135deg,#00b4ff,#00ffc8)}
+.theme-dot[data-t="crimson"]{background:linear-gradient(135deg,#ff2b2b,#ff8c42)}
+.theme-dot[data-t="aurora"]{background:linear-gradient(135deg,#a855f7,#22ffa7)}
+
+.hero{padding:120px 48px 80px;text-align:center;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(10px);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-dim);margin-bottom:28px;transition:background .6s ease,border-color .6s ease,color .6s ease}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(var(--glow),1);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(48px,8vw,104px);font-weight:900;line-height:.98;letter-spacing:-.045em;margin-bottom:24px;background:var(--grad);background-size:250% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradMove 7s ease infinite}
+.hero p{font-size:clamp(15px,1.6vw,18px);color:var(--text-dim);max-width:620px;margin:0 auto 40px;line-height:1.65;transition:color .6s ease}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 34px;border-radius:50px;font-family:inherit;font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease;position:relative;overflow:hidden}
+.btn-primary{color:#fff;background:var(--grad);background-size:200% 200%;animation:gradMove 6s ease infinite;box-shadow:0 8px 30px rgba(var(--glow),.45),inset 0 1px 0 rgba(255,255,255,.2)}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-100%);transition:transform .7s ease}
+.btn-primary:hover::before{transform:translateX(100%)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(var(--glow),.75),inset 0 1px 0 rgba(255,255,255,.2)}
+.btn-ghost{color:var(--text);background:var(--card);border:1px solid var(--border);backdrop-filter:blur(10px)}
+.btn-ghost:hover{transform:translateY(-3px);border-color:rgba(var(--glow),.5);box-shadow:0 10px 30px rgba(var(--glow),.25)}
+
+.stats{display:flex;justify-content:center;gap:60px;padding:60px 48px;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:40px auto 0;max-width:1200px;transition:border-color .6s ease}
+.stat{text-align:center}
+.stat-num{font-family:'Outfit',sans-serif;font-size:44px;font-weight:800;letter-spacing:-.04em;background:var(--grad);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradMove 6s ease infinite}
+.stat-label{font-size:12px;color:var(--text-dim);letter-spacing:.15em;text-transform:uppercase;margin-top:6px;transition:color .6s ease;font-weight:600}
+
+.section{padding:100px 48px;max-width:1400px;margin:0 auto}
+.section-head{margin-bottom:60px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.section-eyebrow{font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;font-weight:800;transition:color .6s ease}
+.section-title{font-family:'Outfit',sans-serif;font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-.04em;line-height:1.05}
+.section-desc{color:var(--text-dim);max-width:380px;font-size:15px;line-height:1.6;transition:color .6s ease}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:24px}
+.card{position:relative;padding:32px;border-radius:24px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .35s ease,box-shadow .35s ease,background .6s ease;overflow:hidden;display:flex;flex-direction:column;min-height:420px}
+.card::before{content:'';position:absolute;inset:0;border-radius:24px;padding:1px;background:linear-gradient(135deg,rgba(var(--glow),.6),transparent 40%,transparent 60%,rgba(var(--glow-2),.6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s ease;pointer-events:none}
+.card:hover::before{opacity:1}
+.card::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);transition:left .9s ease;pointer-events:none}
+.card:hover::after{left:100%}
+.card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.4),0 0 40px rgba(var(--glow),.12)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.card-icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:rgba(var(--glow),.12);border:1px solid rgba(var(--glow),.22);transition:background .6s ease,border-color .6s ease}
+.badge{padding:6px 12px;border-radius:50px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;border:1px solid transparent}
+.badge-hot{background:rgba(var(--glow),.18);color:var(--accent);border-color:rgba(var(--glow),.35)}
+.badge-new{background:rgba(var(--glow-2),.18);color:var(--accent-2);border-color:rgba(var(--glow-2),.35)}
+.badge-vip{background:var(--grad);background-size:200% 200%;animation:gradMove 5s ease infinite;color:#fff;box-shadow:0 0 20px rgba(var(--glow),.5)}
+.card h3{font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+.card-desc{color:var(--text-dim);font-size:14px;line-height:1.6;margin-bottom:22px;transition:color .6s ease}
+.features{list-style:none;margin-bottom:auto;padding-bottom:24px}
+.features li{font-size:13.5px;color:var(--text);opacity:.75;padding:7px 0 7px 24px;position:relative;line-height:1.5;transition:color .6s ease}
+.features li::before{content:'';position:absolute;left:0;top:14px;width:12px;height:2px;background:var(--accent);border-radius:2px;box-shadow:0 0 8px rgba(var(--glow),.9);transition:background .6s ease,box-shadow .6s ease}
+.price-row{display:flex;justify-content:space-between;align-items:center;padding-top:22px;border-top:1px solid var(--border);transition:border-color .6s ease}
+.price{font-family:'Outfit',sans-serif;font-size:34px;font-weight:800;letter-spacing:-.03em;background:var(--grad);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradMove 6s ease infinite;line-height:1}
+.price .cur{font-size:16px;margin-left:2px;opacity:.8}
+.price .from{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);-webkit-text-fill-color:var(--text-dim);margin-bottom:4px;font-weight:700;font-family:'Manrope',sans-serif}
+.btn-buy{padding:12px 24px;border-radius:50px;font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--accent);background:transparent;border:1px solid rgba(var(--glow),.45);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s cubic-bezier(.2,.8,.2,1)}
+.btn-buy svg{transition:transform .3s ease}
+.btn-buy:hover{background:var(--accent);color:var(--bg);border-color:var(--accent);box-shadow:0 0 24px rgba(var(--glow),.7);transform:translateY(-2px)}
+.btn-buy:hover svg{transform:translateX(4px)}
+
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.why-card{padding:30px;border-radius:22px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(20px);transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .35s ease,box-shadow .35s ease,background .6s ease;position:relative;overflow:hidden}
+.why-card:hover{transform:translateY(-6px);border-color:rgba(var(--glow),.45);box-shadow:0 20px 50px rgba(0,0,0,.35),0 0 30px rgba(var(--glow),.15)}
+.why-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:var(--grad);background-size:200% 200%;animation:gradMove 6s ease infinite;margin-bottom:20px;box-shadow:0 0 24px rgba(var(--glow),.35)}
+.why-card h4{font-family:'Outfit',sans-serif;font-size:19px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
+.why-card p{font-size:14px;line-height:1.6;color:var(--text-dim);transition:color .6s ease}
+
+.reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.review{padding:28px;border-radius:22px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(20px);transition:transform .4s ease,border-color .35s ease,background .6s ease}
+.review:hover{transform:translateY(-4px);border-color:rgba(var(--glow),.35)}
+.review-stars{color:var(--accent);font-size:16px;letter-spacing:3px;margin-bottom:14px;text-shadow:0 0 12px rgba(var(--glow),.6)}
+.review-text{font-size:14.5px;line-height:1.65;color:var(--text);opacity:.85;margin-bottom:22px;transition:color .6s ease}
+.review-author{display:flex;align-items:center;gap:12px;padding-top:18px;border-top:1px solid var(--border);transition:border-color .6s ease}
+.review-avatar{width:42px;height:42px;border-radius:50%;background:var(--grad);background-size:200% 200%;animation:gradMove 6s ease infinite;display:grid;place-items:center;font-family:'Outfit',sans-serif;font-weight:800;font-size:15px;color:#fff;flex-shrink:0}
+.review-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:14.5px}
+.review-role{font-size:12px;color:var(--text-dim);margin-top:2px;transition:color .6s ease}
+
+.faq{max-width:900px;margin:0 auto}
+.faq-item{border-radius:18px;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(20px);margin-bottom:14px;overflow:hidden;transition:border-color .3s ease,background .6s ease}
+.faq-item:hover{border-color:rgba(var(--glow),.35)}
+.faq-item.open{border-color:rgba(var(--glow),.5)}
+.faq-q{padding:22px 26px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;user-select:none}
+.faq-q .plus{width:26px;height:26px;border-radius:50%;background:rgba(var(--glow),.15);border:1px solid rgba(var(--glow),.35);display:grid;place-items:center;color:var(--accent);font-weight:700;font-size:15px;transition:transform .35s ease,background .35s ease,color .35s ease;flex-shrink:0}
+.faq-item.open .plus{transform:rotate(45deg);background:var(--accent);color:var(--bg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.8,.2,1),padding .5s ease;padding:0 26px;color:var(--text-dim);font-size:14.5px;line-height:1.65}
+.faq-item.open .faq-a{max-height:300px;padding:0 26px 22px}
+
+.manifest{max-width:1200px;margin:40px auto 0;padding:70px 48px;border-radius:32px;text-align:center;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(20px);position:relative;overflow:hidden;transition:background .6s ease,border-color .6s ease}
+.manifest::before{content:'';position:absolute;inset:-1px;border-radius:32px;padding:1px;background:linear-gradient(135deg,rgba(var(--glow),.7),transparent 50%,rgba(var(--glow-2),.7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.manifest h2{font-family:'Outfit',sans-serif;font-size:clamp(30px,4vw,46px);font-weight:900;letter-spacing:-.04em;margin-bottom:20px;background:var(--grad);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradMove 6s ease infinite}
+.manifest p{color:var(--text-dim);margin-bottom:20px;max-width:720px;margin-left:auto;margin-right:auto;line-height:1.7;font-size:15.5px;transition:color .6s ease}
+.manifest p strong{color:var(--text);font-weight:700}
+.manifest .big-line{font-family:'Outfit',sans-serif;font-size:clamp(20px,2.4vw,28px);font-weight:700;color:var(--text);margin:30px 0;letter-spacing:-.02em;line-height:1.4}
+.manifest .big-line .hl{background:var(--grad);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradMove 5s ease infinite}
+
+.cta{max-width:1200px;margin:40px auto 80px;padding:70px 48px;border-radius:32px;text-align:center;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(20px);position:relative;overflow:hidden;transition:background .6s ease,border-color .6s ease}
+.cta::before{content:'';position:absolute;inset:-1px;border-radius:32px;padding:1px;background:linear-gradient(135deg,rgba(var(--glow),.7),transparent 50%,rgba(var(--glow-2),.7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.cta h2{font-family:'Outfit',sans-serif;font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-.04em;margin-bottom:16px}
+.cta p{color:var(--text-dim);margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6;transition:color .6s ease}
+
+footer{padding:60px 48px 40px;border-top:1px solid var(--border);transition:border-color .6s ease}
+.footer-top{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px}
+.footer-brand p{color:var(--text-dim);font-size:14px;line-height:1.7;margin-top:16px;max-width:320px;transition:color .6s ease}
+.footer-col h5{font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text);margin-bottom:18px}
+.footer-col a{display:block;color:var(--text-dim);text-decoration:none;font-size:14px;padding:6px 0;transition:color .3s ease,padding-left .3s ease}
+.footer-col a:hover{color:var(--accent);padding-left:6px}
+.footer-bottom{max-width:1400px;margin:0 auto;padding-top:30px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--text-dim);font-size:13px;transition:border-color .6s ease,color .6s ease}
+.footer-bottom .made{display:inline-flex;align-items:center;gap:6px}
+.footer-bottom .heart{color:var(--accent);animation:beat 1.6s ease-in-out infinite;text-shadow:0 0 10px rgba(var(--glow),.8)}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.admin-trigger{background:none;border:none;color:var(--text-dim);cursor:pointer;font-family:inherit;font-size:13px;padding:4px 8px;transition:color .3s ease;opacity:.5}
+.admin-trigger:hover{color:var(--accent);opacity:1}
+
+.admin-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.admin-overlay.active{display:flex}
+.admin-login{background:#14141e;border:1px solid rgba(255,0,85,.3);border-radius:22px;padding:44px;max-width:400px;width:100%;text-align:center;box-shadow:0 0 60px rgba(255,0,85,.3);animation:pop .3s ease}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.admin-login h2{font-family:'Outfit',sans-serif;color:#fff;margin-bottom:10px;font-size:24px;font-weight:800}
+.admin-login p{color:#8a8a9a;font-size:14px;margin-bottom:24px;line-height:1.5}
+.admin-login input{width:100%;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.4);color:#fff;font-family:inherit;font-size:15px;margin-bottom:14px;outline:none;transition:border-color .3s ease}
+.admin-login input:focus{border-color:#ff0055;box-shadow:0 0 0 3px rgba(255,0,85,.15)}
+.admin-login button{width:100%;padding:14px;border-radius:50px;background:linear-gradient(135deg,#ff0055,#b400ff);color:#fff;border:none;font-family:inherit;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease}
+.admin-login button:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,0,85,.5)}
+.admin-login .err{color:#ff0055;font-size:13px;margin-top:8px;min-height:18px}
+.admin-panel{background:#0d0d16;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:0;max-width:1000px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;animation:pop .3s ease;box-shadow:0 0 80px rgba(255,0,85,.15)}
+.admin-header{padding:24px 32px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.admin-header h2{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#fff;display:flex;align-items:center;gap:12px}
+.admin-header .admin-actions{display:flex;gap:10px;flex-wrap:wrap}
+.admin-btn{padding:10px 20px;border-radius:50px;font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1px solid transparent;transition:all .3s ease}
+.admin-btn.save{background:linear-gradient(135deg,#00c853,#00a844);color:#fff}
+.admin-btn.save:hover{box-shadow:0 0 24px rgba(0,200,83,.6);transform:translateY(-2px)}
+.admin-btn.dl{background:linear-gradient(135deg,#0099ff,#0066cc);color:#fff}
+.admin-btn.dl:hover{box-shadow:0 0 24px rgba(0,153,255,.6);transform:translateY(-2px)}
+.admin-btn.reset{background:transparent;color:#ff8c42;border-color:rgba(255,140,66,.4)}
+.admin-btn.reset:hover{background:rgba(255,140,66,.15);border-color:#ff8c42}
+.admin-btn.close{background:transparent;color:#8a8a9a;border-color:rgba(255,255,255,.1)}
+.admin-btn.close:hover{color:#fff;border-color:#fff}
+.admin-body{padding:24px 32px 32px;overflow-y:auto;flex:1}
+.admin-body::-webkit-scrollbar{width:8px}
+.admin-body::-webkit-scrollbar-track{background:transparent}
+.admin-body::-webkit-scrollbar-thumb{background:rgba(255,0,85,.35);border-radius:10px}
+.admin-note{background:rgba(255,140,66,.1);border:1px solid rgba(255,140,66,.3);color:#ff8c42;padding:12px 16px;border-radius:12px;font-size:13px;margin-bottom:20px;line-height:1.5}
+.admin-item{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:20px;margin-bottom:14px;transition:border-color .3s ease}
+.admin-item:hover{border-color:rgba(255,0,85,.3)}
+.admin-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
+.admin-item-header h4{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+.admin-item-header .icon-inp{width:44px;height:44px;text-align:center;font-size:22px;padding:0;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);color:#fff;font-family:inherit;outline:none}
+.admin-item-header .icon-inp:focus{border-color:#ff0055}
+.admin-item-id{font-size:11px;color:#666;font-family:monospace;letter-spacing:.05em}
+.admin-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.admin-field{display:flex;flex-direction:column;gap:6px}
+.admin-field.full{grid-column:1/-1}
+.admin-field label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a8a9a}
+.admin-field input,.admin-field textarea{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3);color:#fff;font-family:inherit;font-size:14px;outline:none;transition:border-color .3s ease;resize:vertical}
+.admin-field textarea{min-height:70px;line-height:1.5}
+.admin-field input:focus,.admin-field textarea:focus{border-color:#ff0055;box-shadow:0 0 0 3px rgba(255,0,85,.1)}
+.admin-footer{padding:20px 32px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.admin-status{font-size:13px;color:#00c853;min-height:18px;display:flex;align-items:center;gap:8px}
+.admin-status.saved::before{content:'✓';font-weight:800}
+
+@media(max-width:900px){
+  header{padding:14px 20px}
+  .nav-links{display:none}
+  .hero{padding:80px 20px 60px}
+  .stats{gap:30px;padding:40px 20px}
+  .stat-num{font-size:32px}
+  .section{padding:60px 20px}
+  .cta,.manifest{padding:50px 24px;margin:20px 16px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:30px}
+  footer{padding:40px 20px 30px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .admin-header{padding:18px 20px}
+  .admin-body{padding:18px 20px 20px}
+  .admin-footer{padding:16px 20px}
+  .admin-fields{grid-template-columns:1fr}
+}
+@media(max-width:500px){.footer-top{grid-template-columns:1fr}}
+
+.js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.js .reveal.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="grid-bg"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">⚡</div>
+    <div class="logo-text">NEW ERA</div>
+  </div>
+  <nav class="nav-links">
+    <a href="#catalog">Сборки</a>
+    <a href="#why">Почему мы</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Контакты</a>
+  </nav>
+  <div class="theme-switch" id="themeSwitch">
+    <div class="theme-dot active" data-t="neon" title="Neon"></div>
+    <div class="theme-dot" data-t="gold" title="Gold"></div>
+    <div class="theme-dot" data-t="ocean" title="Ocean"></div>
+    <div class="theme-dot" data-t="crimson" title="Crimson"></div>
+    <div class="theme-dot" data-t="aurora" title="Aurora"></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-badge reveal"><span class="dot"></span>№1 проект по сборкам CRMP в СНГ</div>
+  <h1 class="reveal">ПРЕМИУМ<br>СБОРКИ CRMP</h1>
+  <p class="reveal">Мы — лучший проект по сборкам для Criminal Russia MP. Топовая графика, идеальная оптимизация, лучшие скрипты. С нами ты будешь стреляться как бог и чувствовать игру как никто другой.</p>
+  <div class="hero-actions reveal">
+    <a href="#catalog" class="btn btn-primary">Смотреть каталог
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a href="https://vk.ru/id1122640551" target="_blank" rel="noopener" class="btn btn-ghost">Написать в VK</a>
+  </div>
+</section>
+
+<div class="stats reveal">
+  <div class="stat"><div class="stat-num">1200+</div><div class="stat-label">Клиентов</div></div>
+  <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Рейтинг</div></div>
+  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Поддержка</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Гарантия</div></div>
+</div>
+
+<section class="section" id="catalog">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">01 / Каталог</div>
+      <h2 class="section-title">Выбери свою сборку</h2>
+    </div>
+    <p class="section-desc">Каждая сборка протестирована на популярных серверах CRMP и оптимизирована даже под слабые ПК.</p>
+  </div>
+  <div class="grid" id="catalogGrid"></div>
+</section>
+
+<section class="section" id="why">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">02 / Почему мы</div>
+      <h2 class="section-title">Мы — лучший проект</h2>
+    </div>
+    <p class="section-desc">1200+ довольных игроков уже стреляются с нашими сборками. Ты следующий.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal"><div class="why-icon">🏆</div><h4>№1 в СНГ</h4><p>Крупнейший проект по сборкам CRMP. Нас выбирают профессиональные игроки и топовые кланы.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🎯</div><h4>Будешь хорошо стреляться</h4><p>Наши скрипты и настройки заточены под идеальный аим. С нами ты будешь попадать туда, куда целишься.</p></div>
+    <div class="why-card reveal"><div class="why-icon">⚡</div><h4>Молниеносная установка</h4><p>Устанавливаешь и играешь за 5 минут. Никаких сложных настроек, всё уже готово и оптимизировано.</p></div>
+    <div class="why-card reveal"><div class="why-icon">💎</div><h4>Топовое качество</h4><p>Каждая сборка собирается вручную и тестируется на 20+ серверах перед публикацией.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🛡️</div><h4>Безопасность и стабильность</h4><p>Никаких вирусов, никаких крашей. Работает как швейцарские часы даже на слабых ПК.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🤝</div><h4>Поддержка 24/7</h4><p>Всегда на связи в VK и Discord. Поможем с установкой, настройкой и любым вопросом.</p></div>
+  </div>
+</section>
+
+<section class="section" id="reviews">
+  <div class="section-head reveal">
+    <div><div class="section-eyebrow">03 / Отзывы</div><h2 class="section-title">Что говорят игроки</h2></div>
+    <p class="section-desc">Реальные отзывы от реальных клиентов. Без фотошопа и выдумок.</p>
+  </div>
+  <div class="reviews">
+    <div class="review reveal"><div class="review-stars">★★★★★</div><p class="review-text">«Взял VIP MAX — это просто космос. Начинаю стреляться — попадаю как снайпер. FPS вырос с 60 до 120. Лучший проект, без шуток.»</p>
+      <div class="review-author"><div class="review-avatar">Д</div><div><div class="review-name">Дмитрий</div><div class="review-role">Игрок CRMP · VIP MAX</div></div></div></div>
+    <div class="review reveal"><div class="review-stars">★★★★★</div><p class="review-text">«Сначала сомневался, но после установки STANDARD понял — это реально работает. Игра летает, краши пропали, стрельба стала лёгкой. Спасибо!»</p>
+      <div class="review-author"><div class="review-avatar">А</div><div><div class="review-name">Анна</div><div class="review-role">Стример · STANDARD</div></div></div></div>
+    <div class="review reveal"><div class="review-stars">★★★★★</div><p class="review-text">«Заказал CUSTOM BUILD под себя. Всё сделали быстро, учли каждое пожелание. Поддержка реально 24/7 — отвечали даже в 3 ночи.»</p>
+      <div class="review-author"><div class="review-avatar">М</div><div><div class="review-name">Максим</div><div class="review-role">Клан [PRED] · CUSTOM</div></div></div></div>
+    <div class="review reveal"><div class="review-stars">★★★★★</div><p class="review-text">«PRO GAMER — топ за свои деньги. Графика как в GTA 5, а скрипты вождения сделали гонки в удовольствие. Рекомендую всем друзьям.»</p>
+      <div class="review-author"><div class="review-avatar">К</div><div><div class="review-name">Кирилл</div><div class="review-role">Игрок CRMP · PRO GAMER</div></div></div></div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="section-head reveal"><div><div class="section-eyebrow">04 / FAQ</div><h2 class="section-title">Частые вопросы</h2></div></div>
+  <div class="faq">
+    <div class="faq-item reveal"><div class="faq-q">Как быстро я получу сборку после оплаты? <span class="plus">+</span></div><div class="faq-a">Мгновенно. После оплаты мы сразу отправляем ссылку на скачивание в VK или Discord. Плюс даём инструкцию по установке с картинками.</div></div>
+    <div class="faq-item reveal"><div class="faq-q">Это безопасно? Могут ли забанить? <span class="plus">+</span></div><div class="faq-a">Все сборки проверены антивирусами и работают по правилам серверов. Мы не используем читы и вмешательство в память сервера.</div></div>
+    <div class="faq-item reveal"><div class="faq-q">Подойдёт ли сборка для слабого ПК? <span class="plus">+</span></div><div class="faq-a">Да. STANDARD специально оптимизирован под слабые ПК. PRO и VIP можно настроить под железо — подскажем, как.</div></div>
+    <div class="faq-item reveal"><div class="faq-q">Что если сборка не понравится? <span class="plus">+</span></div><div class="faq-a">Действует гарантия 7 дней — вернём деньги без вопросов. А ещё бесплатно доработаем по твоим пожеланиям.</div></div>
+    <div class="faq-item reveal"><div class="faq-q">Можно ли заказать сборку с нуля под меня? <span class="plus">+</span></div><div class="faq-a">Конечно. CUSTOM BUILD — это как раз для этого. Обсуждаем твои хотелки и собираем эксклюзивно под тебя.</div></div>
+  </div>
+</section>
+
+<div class="manifest reveal">
+  <div class="section-eyebrow">05 / Манифест</div>
+  <h2>Мы — лучший проект по сборкам CRMP</h2>
+  <p>Мы начинали как обычные игроки. Устали от лагов, крашей, отвратной графики и кривой стрельбы. Тогда решили: <strong>сделаем сборки, которые изменят игру навсегда</strong>.</p>
+  <p>Сегодня <strong>New Era</strong> — это №1 проект в СНГ. У нас <strong>всё самое лучшее</strong>: топовые текстуры, идеальная оптимизация, эксклюзивные скрипты и поддержка, которая реально отвечает 24/7.</p>
+  <div class="big-line">С нами ты будешь <span class="hl">хорошо стреляться</span>,<br>летать по карте <span class="hl">без лагов</span><br>и чувствовать себя <span class="hl">королём сервера</span>.</div>
+  <p>Мы не делаем «ещё одну сборку». Мы делаем <strong>твою лучшую игру</strong>. Присоединяйся к 1200+ игрокам, которые уже кайфуют.</p>
+</div>
+
+<div class="cta reveal" id="contact">
+  <h2>Готов стать лучшим?</h2>
+  <p>Напиши нам в VK — подберём сборку под тебя и ответим на все вопросы за пару минут.</p>
+  <a href="https://vk.ru/id1122640551" target="_blank" rel="noopener" class="btn btn-primary">Написать в VK
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo"><div class="logo-mark">⚡</div><div class="logo-text">NEW ERA</div></div>
+      <p>Лучший проект по премиум-сборкам для Criminal Russia MP. Топовая графика, идеальная оптимизация и поддержка, которая не спит.</p>
+    </div>
+    <div class="footer-col"><h5>Сборки</h5><a href="#catalog">Standard</a><a href="#catalog">Pro Gamer</a><a href="#catalog">VIP Max</a><a href="#catalog">Custom Build</a></div>
+    <div class="footer-col"><h5>Информация</h5><a href="#why">О проекте</a><a href="#reviews">Отзывы</a><a href="#faq">FAQ</a><a href="#contact">Поддержка</a></div>
+    <div class="footer-col"><h5>Связь</h5><a href="https://vk.ru/id1122640551" target="_blank" rel="noopener">VK</a><a href="https://vk.ru/id1122640551" target="_blank" rel="noopener">Discord</a><a href="https://vk.ru/id1122640551" target="_blank" rel="noopener">Telegram</a></div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 New Era — Все права защищены <button class="admin-trigger" id="adminTrigger" title="Админ-панель">⚙</button></div>
+    <div class="made">Сделано с <span class="heart">♥</span> для игроков CRMP</div>
+  </div>
+</footer>
+
+<div class="admin-overlay" id="adminLogin">
+  <div class="admin-login">
+    <h2>🔐 Админ-панель</h2>
+    <p>Введите пароль для доступа к редактированию</p>
+    <input type="password" id="adminPass" placeholder="Пароль" autocomplete="off">
+    <button id="adminLoginBtn">Войти</button>
+    <div class="err" id="adminErr"></div>
+  </div>
+</div>
+
+<div class="admin-overlay" id="adminPanel">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <h2>⚙ <span style="background:linear-gradient(135deg,#ff0055,#b400ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Редактор сборок</span></h2>
+      <div class="admin-actions">
+        <button class="admin-btn save" id="adminSave">Сохранить</button>
+        <button class="admin-btn dl" id="adminDownload">📥 Скачать HTML</button>
+        <button class="admin-btn reset" id="adminReset">Сбросить</button>
+        <button class="admin-btn close" id="adminClose">Закрыть</button>
+      </div>
+    </div>
+    <div class="admin-body" id="adminBody"></div>
+    <div class="admin-footer">
+      <div class="admin-status" id="adminStatus"></div>
+      <div style="font-size:12px;color:#666">После правок: «Сохранить» → «Скачать HTML» → залить на GitHub</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+  del(k) { try { localStorage.removeItem(k); } catch {} }
+};
+
+const DEFAULT_PRODUCTS = [
+  { id:'standard', icon:'🎮', badge:'hot', badgeText:'Хит', name:'STANDARD',
+    desc:'Базовая сборка для комфортной игры на любом сервере Criminal Russia.',
+    features:['HD текстуры базового уровня','Оптимизация под слабые ПК','Фиксы крашей и вылетов','Необходимые скрипты'],
+    price:'199', from:false, btnText:'Купить', link:'https://vk.ru/id1122640551' },
+  { id:'pro', icon:'🚀', badge:'new', badgeText:'New', name:'PRO GAMER',
+    desc:'Продвинутая сборка с модами и улучшениями для активных игроков.',
+    features:['Улучшенные текстуры и модели','ENB + ReShade графика','Скрипты для стрельбы и вождения','Кастомное радио и меню'],
+    price:'499', from:false, btnText:'Купить', link:'https://vk.ru/id1122640551' },
+  { id:'vip', icon:'👑', badge:'vip', badgeText:'VIP', name:'VIP MAX',
+    desc:'Максимальная сборка — всё лучшее, что существует для CRMP, в одном пакете.',
+    features:['4K текстуры + PBR материалы','Топовые ENB пресеты','Эксклюзивные скрипты','Персональная настройка','Поддержка 24/7 в Discord'],
+    price:'999', from:false, btnText:'Купить', link:'https://vk.ru/id1122640551' },
+  { id:'weather', icon:'🌧️', badge:null, badgeText:'', name:'WEATHER PACK',
+    desc:'Пак погодных модов и эффектов для атмосферной игры в любое время суток.',
+    features:['Реалистичные дожди и грозы','Плавная смена дня и ночи','Туман, снег, град','Работает на всех серверах'],
+    price:'149', from:false, btnText:'Купить', link:'https://vk.ru/id1122640551' },
+  { id:'cars', icon:'🚗', badge:null, badgeText:'', name:'CAR MODS',
+    desc:'Заменённые машины, реалистичные звуки двигателей и улучшенная физика.',
+    features:['100+ новых моделей авто','Реалистичные звуки двигателей','Улучшенная физика вождения','HD диски и покрышки'],
+    price:'299', from:false, btnText:'Купить', link:'https://vk.ru/id1122640551' },
+  { id:'custom', icon:'🎨', badge:null, badgeText:'', name:'CUSTOM BUILD',
+    desc:'Индивидуальная сборка под твои требования. Собираем полностью с нуля.',
+    features:['Обсуждаем твои хотелки','Сборка с нуля под тебя','Правки бесплатно месяц','Установка и настройка'],
+    price:'1500', from:true, btnText:'Заказать', link:'https://vk.ru/id1122640551' }
+];
+
+const STORAGE_KEY = 'newera_products_v1';
+const ADMIN_PASSWORD = 'newera2025';
+
+function getProducts() {
+  try {
+    const raw = store.get(STORAGE_KEY, null);
+    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed) || !parsed.length) return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+    return parsed;
+  } catch { return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)); }
+}
+
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+const escapeAttr = escapeHtml;
+
+let observer = null;
+if ('IntersectionObserver' in window) {
+  observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.05 });
+}
+function observeReveal(el) {
+  if (observer) observer.observe(el);
+  else el.classList.add('in');
+}
+
+function renderCatalog() {
+  const products = getProducts();
+  const grid = document.getElementById('catalogGrid');
+  if (!grid) return;
+  grid.innerHTML = products.map(p => `
+    <div class="card reveal">
+      <div class="card-top">
+        <div class="card-icon">${p.icon || '📦'}</div>
+        ${p.badge ? `<span class="badge badge-${p.badge}">${escapeHtml(p.badgeText || '')}</span>` : ''}
+      </div>
+      <h3>${escapeHtml(p.name)}</h3>
+      <p class="card-desc">${escapeHtml(p.desc)}</p>
+      <ul class="features">${(p.features||[]).map(f => `<li>${escapeHtml(f)}</li>`).join('')}</ul>
+      <div class="price-row">
+        <div class="price">${p.from ? '<span class="from">от</span>' : ''}${escapeHtml(String(p.price))}<span class="cur">₽</span></div>
+        <a href="${escapeAttr(p.link || '#')}" target="_blank" rel="noopener" class="btn-buy">
+          ${escapeHtml(p.btnText || 'Купить')}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(observeReveal);
+}
+
+const adminLogin = document.getElementById('adminLogin');
+const adminPanel = document.getElementById('adminPanel');
+const adminBody = document.getElementById('adminBody');
+const adminStatus = document.getElementById('adminStatus');
+const adminErr = document.getElementById('adminErr');
+const adminPass = document.getElementById('adminPass');
+
+function openLogin() {
+  adminLogin.classList.add('active');
+  adminErr.textContent = '';
+  adminPass.value = '';
+  setTimeout(() => adminPass.focus(), 100);
+}
+function closeLogin() { adminLogin.classList.remove('active'); }
+function openPanel() { adminLogin.classList.remove('active'); adminPanel.classList.add('active'); buildAdminFields(); }
+function closePanel() { adminPanel.classList.remove('active'); }
+
+document.getElementById('adminTrigger').addEventListener('click', openLogin);
+document.getElementById('adminLoginBtn').addEventListener('click', tryLogin);
+adminPass.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+function tryLogin() {
+  if (adminPass.value === ADMIN_PASSWORD) openPanel();
+  else { adminErr.textContent = 'Неверный пароль'; adminPass.value = ''; adminPass.focus(); }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a' || e.key === 'Ф' || e.key === 'ф')) {
+    e.preventDefault(); openLogin();
+  }
+});
+
+document.getElementById('adminClose').addEventListener('click', closePanel);
+adminPanel.addEventListener('click', e => { if (e.target === adminPanel) closePanel(); });
+adminLogin.addEventListener('click', e => { if (e.target === adminLogin) closeLogin(); });
+
+function buildAdminFields() {
+  const products = getProducts();
+  adminBody.innerHTML = `
+    <div class="admin-note">Редактируй поля ниже → жми <b>«Сохранить»</b> → жми <b>«📥 Скачать HTML»</b> → залей новый <b>index.html</b> на GitHub. Тогда изменения увидят все.</div>
+    ${products.map((p, i) => `
+      <div class="admin-item" data-idx="${i}">
+        <div class="admin-item-header">
+          <h4>
+            <input class="icon-inp" type="text" value="${escapeAttr(p.icon || '')}" data-field="icon" maxlength="4">
+            ${escapeHtml(p.name || 'Без названия')}
+          </h4>
+          <span class="admin-item-id">ID: ${escapeHtml(p.id)}</span>
+        </div>
+        <div class="admin-fields">
+          <div class="admin-field"><label>Название</label><input type="text" value="${escapeAttr(p.name || '')}" data-field="name"></div>
+          <div class="admin-field"><label>Цена (₽)</label><input type="text" value="${escapeAttr(String(p.price ?? ''))}" data-field="price"></div>
+          <div class="admin-field"><label>Текст кнопки</label><input type="text" value="${escapeAttr(p.btnText || '')}" data-field="btnText"></div>
+          <div class="admin-field"><label>Ссылка кнопки</label><input type="text" value="${escapeAttr(p.link || '')}" data-field="link"></div>
+          <div class="admin-field"><label>Бейдж (hot / new / vip / пусто)</label><input type="text" value="${escapeAttr(p.badge || '')}" data-field="badge" placeholder="hot"></div>
+          <div class="admin-field"><label>Текст бейджа</label><input type="text" value="${escapeAttr(p.badgeText || '')}" data-field="badgeText" placeholder="Хит"></div>
+          <div class="admin-field"><label>Показывать «от» (да / нет)</label><input type="text" value="${p.from ? 'да' : 'нет'}" data-field="from"></div>
+          <div class="admin-field"><label>ID (не менять)</label><input type="text" value="${escapeAttr(p.id || '')}" disabled style="opacity:.5"></div>
+          <div class="admin-field full"><label>Описание</label><textarea data-field="desc">${escapeHtml(p.desc || '')}</textarea></div>
+          <div class="admin-field full"><label>Преимущества (каждое с новой строки)</label><textarea data-field="features">${escapeHtml((p.features || []).join('\n'))}</textarea></div>
+        </div>
+      </div>
+    `).join('')}
+  `;
+}
+
+function collectFromForm() {
+  const items = adminBody.querySelectorAll('.admin-item');
+  const products = getProducts();
+  items.forEach((item, i) => {
+    const get = f => item.querySelector(`[data-field="${f}"]`)?.value ?? '';
+    const p = products[i];
+    if (!p) return;
+    p.icon = get('icon').trim();
+    p.name = get('name').trim();
+    p.price = get('price').trim();
+    p.btnText = get('btnText').trim();
+    p.link = get('link').trim();
+    p.badge = get('badge').trim() || null;
+    p.badgeText = get('badgeText').trim();
+    p.desc = get('desc').trim();
+    p.features = get('features').split('\n').map(s => s.trim()).filter(Boolean);
+    p.from = ['да','yes','true','1','on','y','+'].includes(get('from').trim().toLowerCase());
+  });
+  return products;
+}
+
+document.getElementById('adminSave').addEventListener('click', () => {
+  const products = collectFromForm();
+  store.set(STORAGE_KEY, JSON.stringify(products));
+  renderCatalog();
+  buildAdminFields();
+  adminStatus.textContent = 'Изменения сохранены!';
+  adminStatus.classList.add('saved');
+  setTimeout(() => { adminStatus.textContent = ''; adminStatus.classList.remove('saved'); }, 2500);
+});
+
+document.getElementById('adminDownload').addEventListener('click', async () => {
+  try {
+    // собираем свежие данные из формы
+    const products = collectFromForm();
+    // берём текущий HTML страницы
+    let html;
+    try {
+      const res = await fetch(location.href, { cache: 'no-store' });
+      html = await res.text();
+    } catch (e) {
+      // фоллбэк для file:// — берём исходник страницы
+      html = document.documentElement.outerHTML;
+    }
+    const newBlock = 'const DEFAULT_PRODUCTS = ' + JSON.stringify(products, null, 2) + ';';
+    const re = /const DEFAULT_PRODUCTS = \[[\s\S]*?\];/;
+    if (!re.test(html)) {
+      alert('Не смог найти DEFAULT_PRODUCTS в файле. Скачаю как есть.');
+    } else {
+      html = html.replace(re, newBlock);
+    }
+    // убираем динамические правки из HTML (уже не нужны)
+    // создаём файл
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    adminStatus.textContent = '✓ index.html скачан — залей его на GitHub';
+    adminStatus.classList.add('saved');
+    setTimeout(() => { adminStatus.textContent = ''; adminStatus.classList.remove('saved'); }, 5000);
+  } catch (e) {
+    alert('Ошибка: ' + e.message);
+  }
+});
+
+document.getElementById('adminReset').addEventListener('click', () => {
+  if (!confirm('Сбросить все изменения?')) return;
+  store.del(STORAGE_KEY);
+  renderCatalog();
+  buildAdminFields();
+  adminStatus.textContent = 'Сброшено к заводским';
+  adminStatus.classList.add('saved');
+  setTimeout(() => { adminStatus.textContent = ''; adminStatus.classList.remove('saved'); }, 2500);
+});
+
+const root = document.documentElement;
+const dots = document.querySelectorAll('.theme-dot');
+const savedTheme = store.get('newera-theme', 'neon');
+root.setAttribute('data-theme', savedTheme);
+dots.forEach(d => d.classList.toggle('active', d.dataset.t === savedTheme));
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const t = dot.dataset.t;
+    root.setAttribute('data-theme', t);
+    store.set('newera-theme', t);
+    dots.forEach(d => d.classList.toggle('active', d === dot));
+  });
+});
+
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }); }
+  });
+});
+
+renderCatalog();
+document.querySelectorAll('.reveal').forEach(observeReveal);
+
+setTimeout(() => {
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight + 200) el.classList.add('in');
+  });
+}, 800);
+window.addEventListener('load', () => {
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight + 200) el.classList.add('in');
+  });
+});
+</script>
+
+</body>
+</html>
